@@ -5,30 +5,34 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Task2.Models;
+using Task2.Storage;
 
 namespace Task2.Repository
 {
-    class MockMotorcycleRepository : IMotorcycleRepository
+    class MsSqlEfMotorcycleRepository : IMotorcycleRepository
     {
-        private List<Motorcycle> _motorcycles { get; set; } = new List<Motorcycle>();
+        private readonly MotorcycleContext _context; 
+        public MsSqlEfMotorcycleRepository()
+        {
+            _context = new MotorcycleContext();
+        }
         public void CreateMotorcycle(Motorcycle moto)
         {
-            if (!_motorcycles.Contains(moto))
-            {
-                _motorcycles.Add(moto);
-                Log.Information($"{moto} created");
-            }
+            _context.Motorcycles.Add(moto);
+            _context.SaveChanges();
+            Log.Information($"{moto} created");
         }
 
         public void DeleteMotorcycle(Motorcycle moto)
         {
-            _motorcycles.Remove(moto);
+            _context.Motorcycles.Remove(moto);
+            _context.SaveChanges();
             Log.Information($"{moto} deleted");
         }
 
         public Motorcycle GetMotorcycleById(Guid id)
         {
-            var moto=_motorcycles.FirstOrDefault(moto => moto.Id.Equals(id));
+            var moto= _context.Motorcycles.FirstOrDefault(moto => moto.Id.Equals(id));
             Log.Information($"{moto} got by id");
             return moto;
         }
@@ -36,16 +40,13 @@ namespace Task2.Repository
         public IEnumerable<Motorcycle> GetMotorcycles()
         {
             Log.Information($"All motorcycles got");
-            return _motorcycles;
+            return _context.Motorcycles;
         }
 
         public void UpdateMotorcycle(Motorcycle moto)
         {
-            var index = _motorcycles.FindIndex(obj=>obj.Equals(moto));
-            if (index < 0)
-                CreateMotorcycle(moto);
-            else
-                _motorcycles[index] = moto;
+            _context.Motorcycles.Update(moto);
+            _context.SaveChanges();
             Log.Information($"{moto} updated");
         }
     }

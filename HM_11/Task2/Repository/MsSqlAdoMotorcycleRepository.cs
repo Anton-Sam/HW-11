@@ -1,6 +1,8 @@
 ﻿using Microsoft.Data.SqlClient;
+using Serilog;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using Task2.Models;
 
@@ -11,23 +13,32 @@ namespace Task2.Repository
         private readonly SqlConnection _connection;
         public MsSqlAdoMotorcycleRepository()
         {
-            string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=MotorcycleDatabase;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-            _connection = new SqlConnection(connectionString);
-            _connection.Open();
+            try
+            {
+                var connectionString= ConfigurationManager.ConnectionStrings["LocalDBConnectionString"].ConnectionString;
+                _connection = new SqlConnection(connectionString);
+                _connection.Open();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.Message);
+                Environment.Exit(1);
+            }
         }
 
         public void CreateMotorcycle(Motorcycle moto)
         {
             string sqlExpression = $"INSERT INTO Motorcycles (Id,Name,Model,Year,Odometre) VALUES ('{moto.Id}', '{moto.Name}','{moto.Model}','{moto.Year}','{moto.Odometre}')";
-            SqlCommand command = new SqlCommand(sqlExpression, _connection);
-            command.ExecuteNonQuery();
+            GetSqlCommand(sqlExpression).ExecuteNonQuery();
+            Log.Information($"{moto} created");
         }
 
         public void DeleteMotorcycle(Motorcycle moto)
         {
             string sqlExpression = $"DELETE FROM Motorcycles WHERE Id='{moto.Id}'";
-            SqlCommand command = new SqlCommand(sqlExpression, _connection);
-            command.ExecuteNonQuery();
+            GetSqlCommand(sqlExpression).ExecuteNonQuery();
+            Log.Information($"{moto} deleted");
+
         }
 
         public Motorcycle GetMotorcycleById(Guid id)
@@ -35,10 +46,11 @@ namespace Task2.Repository
             string sqlExpression = $"SELECT * FROM Motorcycles WHERE Id='{id}'";
             SqlDataAdapter adapter = new SqlDataAdapter(sqlExpression, _connection);
             DataTable dt = new DataTable();
+            Motorcycle moto = null;
             adapter.Fill(dt);
             if (dt.Rows.Count > 0)
             {
-                return new Motorcycle
+                moto = new Motorcycle
                 {
                     Id = (Guid)dt.Rows[0]["Id"],
                     Name = (string)dt.Rows[0]["Name"],
@@ -47,7 +59,8 @@ namespace Task2.Repository
                     Odometre = (int)dt.Rows[0]["Odometre"]
                 };
             }
-            return null;
+            Log.Information($"{moto} got by id");
+            return moto;
         }
 
         public IEnumerable<Motorcycle> GetMotorcycles()
@@ -58,7 +71,7 @@ namespace Task2.Repository
 
             var resultList = new List<Motorcycle>();
             adapter.Fill(dt);
-            for (var i=0;i<dt.Rows.Count;i++)
+            for (var i = 0; i < dt.Rows.Count; i++)
             {
                 var moto = new Motorcycle
                 {
@@ -70,14 +83,17 @@ namespace Task2.Repository
                 };
                 resultList.Add(moto);
             }
+            Log.Information($"All motorcycles got");
             return resultList;
         }
 
         public void UpdateMotorcycle(Motorcycle moto)
         {
             string sqlExpression = $"UPDATE Motorcycles SET Name='{moto.Name}',Model='{moto.Model}',Year='{moto.Year}',Odometre='{moto.Odometre}' WHERE Id='{moto.Id}'";
-            SqlCommand command = new SqlCommand(sqlExpression, _connection);
-            command.ExecuteNonQuery();
+            GetSqlCommand(sqlExpression).ExecuteNonQuery();
+            Log.Information($"{moto} updated");
         }
+
+        private SqlCommand GetSqlCommand(string expr) => new SqlCommand(expr, _connection);
     }
 }

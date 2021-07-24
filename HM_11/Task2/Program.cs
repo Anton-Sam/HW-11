@@ -1,5 +1,5 @@
-﻿using System;
-using Task2.Controllers;
+﻿using Serilog;
+using System;
 using Task2.Models;
 using Task2.Repository;
 
@@ -9,8 +9,15 @@ namespace Task2
     {
         static void Main(string[] args)
         {
-            IMotorcycleRepository repository = new MsSqlAdoMotorcycleRepository();
-            var moto= new Motorcycle
+            ProgramStart();
+            TestRepository(new MockMotorcycleRepository());
+            TestRepository(new MsSqlAdoMotorcycleRepository());
+            TestRepository(new MsSqlEfMotorcycleRepository());
+        }
+
+        private static void TestRepository(IMotorcycleRepository repository)
+        {
+            var moto = new Motorcycle
             {
                 Id = Guid.NewGuid(),
                 Name = "Honda CBR-600",
@@ -19,17 +26,36 @@ namespace Task2
                 Odometre = 56000
             };
             repository.CreateMotorcycle(moto);
-            
-            var res=repository.GetMotorcycles();
 
-            var res1=repository.GetMotorcycleById(moto.Id);
+            var moto1 = repository.GetMotorcycles();
+
+            var moto2 = repository.GetMotorcycleById(moto.Id);
 
             moto.Name = "Yamaha";
             repository.UpdateMotorcycle(moto);
-            var res4 = repository.GetMotorcycleById(moto.Id);
+            var moto3 = repository.GetMotorcycleById(moto.Id);
             repository.DeleteMotorcycle(moto);
 
-            var res2 = repository.GetMotorcycles();
+            var moto4 = repository.GetMotorcycles();
+        }
+
+        private static void ProgramStart()
+        {
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .WriteTo.Console()
+                .WriteTo.File("../../../Logs/log.txt", rollingInterval: RollingInterval.Hour)
+                .CreateLogger();
+
+            var type = typeof(Program);
+
+            Log.Information($"Program: {type.Assembly.FullName}, namespace: {type.Namespace}");
+        }
+
+        private static void PrintInfo(string str)
+        {
+            Log.Information($"Started write to console");
+            Console.WriteLine(str);
         }
     }
 }

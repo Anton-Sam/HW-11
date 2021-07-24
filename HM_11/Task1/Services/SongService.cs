@@ -12,7 +12,7 @@ namespace Task1.Services
             return new
             {
                 Title = song.Name,
-                Minutes = song.Duration,
+                Minutes = song.Duration.ToString().Substring(3),
                 AlbumYear = song.CreationDate.Year
             };
         }
