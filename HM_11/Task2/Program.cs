@@ -44,7 +44,7 @@ namespace Task2
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .WriteTo.Console()
-                .WriteTo.File("logs/log.txt", rollingInterval: RollingInterval.Hour)
+                .WriteTo.File("../../../Logs/log.txt", rollingInterval: RollingInterval.Hour)
                 .CreateLogger();
 
             var type = typeof(Program);
