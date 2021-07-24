@@ -11,23 +11,23 @@ using Task1.Storage;
 
 namespace Task1.ConsoleInput
 {
-    class ConsoleInterface
+    static class ConsoleManager
     {
-        static void ConsoleStartPage(int currentCursorPosition)
+        static void CreateStartPage(int currentCursorPosition)
         {
             Console.ResetColor();
             Console.Clear();
             Console.WriteLine("***********");
-            SetConsoleColor(Position.CreateSong, currentCursorPosition);
+            SetColor(Position.CreateSong, currentCursorPosition);
             Console.WriteLine("Create song");
-            SetConsoleColor(Position.GetSong, currentCursorPosition);
+            SetColor(Position.GetSong, currentCursorPosition);
             Console.WriteLine("Get song   ");
-            SetConsoleColor(Position.SpeedTest, currentCursorPosition);
+            SetColor(Position.SpeedTest, currentCursorPosition);
             Console.WriteLine("Speed test ");
             Console.SetCursorPosition(0, currentCursorPosition);
         }
 
-        static void SetConsoleColor(Position position, int currentCursorPosition)
+        static void SetColor(Position position, int currentCursorPosition)
         {
             if ((int)position == currentCursorPosition)
             {
@@ -38,9 +38,9 @@ namespace Task1.ConsoleInput
                 Console.ResetColor();
         }
 
-        public static void ConsoleManager()
+        public static void SelectAction()
         {
-            ConsoleStartPage((int)Position.CreateSong);
+            CreateStartPage((int)Position.CreateSong);
             ConsoleKeyInfo key;
             while (true)
             {
@@ -62,7 +62,7 @@ namespace Task1.ConsoleInput
             else
             {
                 Console.CursorTop = Console.CursorTop + offset;
-                ConsoleStartPage(Console.CursorTop);
+                CreateStartPage(Console.CursorTop);
             }
         }
 
@@ -71,7 +71,7 @@ namespace Task1.ConsoleInput
             switch (Console.CursorTop)
             {
                 case (int)Position.CreateSong: CreateSong(); break;
-                case (int)Position.GetSong: GetSong(); break;
+                case (int)Position.GetSong: GetSongs(); break;
                 case (int)Position.SpeedTest: SpeedTest(); break;
             }
         }
@@ -102,10 +102,10 @@ namespace Task1.ConsoleInput
         {
             Console.WriteLine("Press any key to continue");
             Console.ReadKey();
-            ConsoleStartPage((int)Position.CreateSong);
+            CreateStartPage((int)Position.CreateSong);
         }
 
-        private static void GetSong()
+        private static void GetSongs()
         {
             ClearConsole();
             if (Database.Songs.Count > 0)
@@ -113,7 +113,7 @@ namespace Task1.ConsoleInput
                 Random random = new Random();
                 ISongService songService = new SongService();
                 ISerializeService serializeService = new NewtonsoftService();
-                Console.WriteLine($"Serialized object:\n{serializeService.SerializeObject(songService.GetSongData(Database.Songs[random.Next(0, Database.Songs.Count - 1)]))}");
+                Database.Songs.ForEach(song => Console.WriteLine($"Serialized object:\n{serializeService.SerializeObject(songService.GetSongData(song))}"));
             }
             else
                 Console.WriteLine("There are no any songs in Database");

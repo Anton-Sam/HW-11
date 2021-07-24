@@ -12,7 +12,7 @@ namespace Task1
     {
         static void Main(string[] args)
         {
-            ConsoleInterface.ConsoleManager();
+            ConsoleManager.SelectAction();
         }
     }
 }

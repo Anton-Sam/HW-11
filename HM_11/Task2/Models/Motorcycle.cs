@@ -28,5 +28,10 @@ namespace Task2.Models
         {
             return Id.ToString().Length;
         }
+
+        public override string ToString()
+        {
+            return $"Id: {Id}, Name: {Name}, Model: {Model}, Year: {Year.Year}, Odometre: {Odometre}";
+        }
     }
 }
