@@ -78,7 +78,7 @@ namespace Task1.ConsoleInput
 
         private static void CreateSong()
         {
-            ClearSong();
+            ClearConsole();
             var song = new Song()
             {
                 Name = InputData.EnterString("Enter song name:", 3),
@@ -87,12 +87,12 @@ namespace Task1.ConsoleInput
                 Duration = InputData.EnterTimeLength("Enter song duration"),
                 Genre = InputData.EnterGenre()
             };
-            Database.SongBase.Add(song);
+            Database.Songs.Add(song);
             Console.WriteLine("Song succesfully added.");
             Continue();
         }
 
-        private static void ClearSong()
+        private static void ClearConsole()
         {
             Console.ResetColor();
             Console.Clear();
@@ -107,14 +107,13 @@ namespace Task1.ConsoleInput
 
         private static void GetSong()
         {
-            ClearSong();
-            if (Database.SongBase.Count > 0)
+            ClearConsole();
+            if (Database.Songs.Count > 0)
             {
                 Random random = new Random();
                 ISongService songService = new SongService();
-                Console.Clear();
                 ISerializeService serializeService = new NewtonsoftService();
-                Console.WriteLine($"Serialized object:\n{serializeService.SerializeObject(songService.GetSongData(Database.SongBase[random.Next(0, Database.SongBase.Count - 1)]))}");
+                Console.WriteLine($"Serialized object:\n{serializeService.SerializeObject(songService.GetSongData(Database.Songs[random.Next(0, Database.Songs.Count - 1)]))}");
             }
             else
                 Console.WriteLine("There are no any songs in Database");
@@ -124,12 +123,12 @@ namespace Task1.ConsoleInput
 
         private static void SpeedTest()
         {
-            ClearSong();
-            if (Database.SongBase.Count > 0)
+            ClearConsole();
+            if (Database.Songs.Count > 0)
             {
                 Random random = new Random();
                 ISongService songService = new SongService();
-                var serializeCollection = Enumerable.Repeat(songService.GetSongData(Database.SongBase[random.Next(0, Database.SongBase.Count - 1)]), 100000);
+                var serializeCollection = Enumerable.Repeat(songService.GetSongData(Database.Songs[random.Next(0, Database.Songs.Count - 1)]), 100000);
                 //Newtonsoft speedtest
                 SpeedTestService(new NewtonsoftService(), serializeCollection);
                 //Text.Json speedtest
@@ -147,7 +146,7 @@ namespace Task1.ConsoleInput
             sw.Start();
             serializeService.DeserializeObject(serializeService.SerializeObject(serializeObj));
             sw.Stop();
-            Console.WriteLine($"{serializeService.GetType().Name} Ellapsed ms: {sw.ElapsedMilliseconds}");
+            Console.WriteLine($"{serializeService.GetType().Name} ellapsed ms: {sw.ElapsedMilliseconds}");
         }
     }
 }

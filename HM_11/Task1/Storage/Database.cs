@@ -9,6 +9,6 @@ namespace Task1.Storage
 {
     static class Database
     {
-        public static List<Song> SongBase = new List<Song>(); 
+        public static List<Song> Songs = new List<Song>(); 
     }
 }
