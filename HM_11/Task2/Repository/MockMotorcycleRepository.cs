@@ -2,51 +2,52 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Task2.Models;
 
 namespace Task2.Repository
 {
-    class MockMotorcycleRepository : IMotorcycleRepository
+    class Repository<T> : IRepository<T> where T : Entity
     {
-        private List<Motorcycle> _motorcycles { get; set; } = new List<Motorcycle>();
-        public void CreateMotorcycle(Motorcycle moto)
-        {
-            if (!_motorcycles.Contains(moto))
+        private List<T> _objects { get; set; } = new List<T>();
+        public void Create(T obj)
+        {                  
+            if (!_objects.Contains(obj))
             {
-                _motorcycles.Add(moto);
-                Log.Information($"{moto} created");
+                _objects.Add(obj);
+                Log.Information($"{obj} created");
             }
         }
 
-        public void DeleteMotorcycle(Motorcycle moto)
+        public void Delete(T obj)
         {
-            _motorcycles.Remove(moto);
-            Log.Information($"{moto} deleted");
+            _objects.Remove(obj);
+            Log.Information($"{obj} deleted");
         }
 
-        public Motorcycle GetMotorcycleById(Guid id)
+        public T GetById(Guid id)
         {
-            var moto=_motorcycles.FirstOrDefault(moto => moto.Id.Equals(id));
-            Log.Information($"{moto} got by id");
-            return moto;
+            var obj = _objects.FirstOrDefault(o => o.Id.Equals(id));
+            Log.Information($"{obj} got by id");
+            return obj;                  
         }
 
-        public IEnumerable<Motorcycle> GetMotorcycles()
+        public IEnumerable<T> GetObjects()
         {
             Log.Information($"All motorcycles got");
-            return _motorcycles;
+            return _objects;
         }
 
-        public void UpdateMotorcycle(Motorcycle moto)
+        public void Update(T obj)
         {
-            var index = _motorcycles.FindIndex(obj=>obj.Equals(moto));
+            var index = _objects.FindIndex(o => o.Equals(obj));
             if (index < 0)
-                CreateMotorcycle(moto);
+                Create(obj);
             else
-                _motorcycles[index] = moto;
-            Log.Information($"{moto} updated");
+                _objects[index] = obj;
+            Log.Information($"{obj} updated");
         }
     }
 }

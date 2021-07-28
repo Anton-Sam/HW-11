@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Task2.Models
 {
-    class Motorcycle
+    [Table("Motorcycles")]
+    class Motorcycle : Entity
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Model { get; set; }
         public DateTime Year { get; set; }

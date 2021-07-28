@@ -9,11 +9,11 @@ using Task2.Models;
 
 namespace Task2.Storage
 {
-    class MotorcycleContext : DbContext
+    class ObjectContext<T> : DbContext where T: Entity
     {
-        public DbSet<Motorcycle> Motorcycles { get; set; }
+        public DbSet<T> Objects { get; set; }
 
-        public MotorcycleContext()
+        public ObjectContext()
         {
             Database.EnsureCreated();
         }

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Task2.Models;
@@ -9,45 +10,46 @@ using Task2.Storage;
 
 namespace Task2.Repository
 {
-    class MsSqlEfMotorcycleRepository : IMotorcycleRepository
+    class MsSqlEfRepository<T> : IRepository<T> where T : Entity
     {
-        private readonly MotorcycleContext _context; 
-        public MsSqlEfMotorcycleRepository()
+        private readonly ObjectContext<T> _context;
+        public MsSqlEfRepository()
         {
-            _context = new MotorcycleContext();
+            _context = new ObjectContext<T>();
         }
-        public void CreateMotorcycle(Motorcycle moto)
-        {
-            _context.Motorcycles.Add(moto);
+        public void Create(T obj)
+        {            
+            _context.Objects.Add(obj);
             _context.SaveChanges();
-            Log.Information($"{moto} created");
+            Log.Information($"{obj} created");
         }
 
-        public void DeleteMotorcycle(Motorcycle moto)
+        public void Delete(T obj)
         {
-            _context.Motorcycles.Remove(moto);
+            _context.Objects.Remove(obj);
             _context.SaveChanges();
-            Log.Information($"{moto} deleted");
+            Log.Information($"{obj} deleted");
         }
 
-        public Motorcycle GetMotorcycleById(Guid id)
+        public T GetById(Guid id)
         {
-            var moto= _context.Motorcycles.FirstOrDefault(moto => moto.Id.Equals(id));
-            Log.Information($"{moto} got by id");
-            return moto;
+            Type type = typeof(T);
+            var obj = _context.Objects.FirstOrDefault(o => o.Id.Equals(id));
+            Log.Information($"{obj} got by id");
+            return obj;
         }
 
-        public IEnumerable<Motorcycle> GetMotorcycles()
+        public IEnumerable<T> GetObjects()
         {
             Log.Information($"All motorcycles got");
-            return _context.Motorcycles;
+            return _context.Objects;
         }
 
-        public void UpdateMotorcycle(Motorcycle moto)
+        public void Update(T obj)
         {
-            _context.Motorcycles.Update(moto);
+            _context.Objects.Update(obj);
             _context.SaveChanges();
-            Log.Information($"{moto} updated");
+            Log.Information($"{obj} updated");
         }
     }
 }
