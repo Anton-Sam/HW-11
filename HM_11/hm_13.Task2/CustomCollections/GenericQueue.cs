@@ -10,16 +10,9 @@ namespace hm_13.Task2.CustomCollections
 
         public T Dequeue()
         {
-            try
-            {
-                var element = Peek();
-                _queue.RemoveAt(0);
-                return element;
-            }
-            catch (InvalidOperationException ex)
-            {
-                throw new InvalidOperationException(ex.Message);
-            }
+            var element = Peek();
+            _queue.RemoveAt(0);
+            return element;
         }
 
         public void Enqueue(T obj)
