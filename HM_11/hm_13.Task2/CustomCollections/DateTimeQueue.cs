@@ -6,7 +6,7 @@ namespace hm_13.Task2.CustomCollections
 {
     class DateTimeQueue : IQueue<DateTime>
     {
-        private DateTime[] _queue = new DateTime[1_000];
+        private DateTime[] _queue = new DateTime[2];
         private int _position;
 
         public DateTime Dequeue()
@@ -20,6 +20,8 @@ namespace hm_13.Task2.CustomCollections
 
         public void Enqueue(DateTime element)
         {
+            if (_position>=_queue.Length)
+                Array.Resize(ref _queue, 2 * _queue.Length);
             _queue[_position] = element;
             _position++;
         }
