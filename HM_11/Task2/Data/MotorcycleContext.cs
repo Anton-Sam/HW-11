@@ -7,13 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Task2.Models;
 
-namespace Task2.Storage
+namespace Task2.Data
 {
-    class ObjectContext<T> : DbContext where T: Entity
+    class ApplicationDbContext<T> : DbContext where T: Entity
     {
-        public DbSet<T> Objects { get; set; }
+        public DbSet<T> Entities { get; set; }
 
-        public ObjectContext()
+        public ApplicationDbContext()
         {
             Database.EnsureCreated();
         }

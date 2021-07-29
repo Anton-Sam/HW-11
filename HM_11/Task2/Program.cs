@@ -10,8 +10,8 @@ namespace Task2
         static void Main(string[] args)
         {
             ProgramStart();
-            TestRepository(new Repository<Motorcycle>());
-            //TestRepository(new MsSqlAdoMotorcycleRepository());
+            TestRepository(new ListRepository<Motorcycle>());
+            TestRepository(new MsSqlAdoMotorcycleRepository());
             TestRepository(new MsSqlEfRepository<Motorcycle>());
         }
 
@@ -19,7 +19,6 @@ namespace Task2
         {
             var moto = new Motorcycle
             {
-                Id = Guid.NewGuid(),
                 Name = "Honda CBR-600",
                 Model = "CBR-600",
                 Year = new DateTime(2000, 1, 1),
@@ -27,16 +26,17 @@ namespace Task2
             };
             repository.Create(moto);
 
-            var moto1 = repository.GetObjects();
+            var motos = repository.GetObjects();
 
             var moto2 = repository.GetById(moto.Id);
 
             moto.Name = "Yamaha";
             repository.Update(moto);
+            
             var moto3 = repository.GetById(moto.Id);
-            repository.Delete(moto);
+            repository.Delete(moto3);
 
-            var moto4 = repository.GetObjects();
+            var motos1 = repository.GetObjects();
         }
 
         private static void ProgramStart()
@@ -50,12 +50,6 @@ namespace Task2
             var type = typeof(Program);
 
             Log.Information($"Program: {type.Assembly.FullName}, namespace: {type.Namespace}");
-        }
-
-        private static void PrintInfo(string str)
-        {
-            Log.Information($"Started write to console");
-            Console.WriteLine(str);
         }
     }
 }

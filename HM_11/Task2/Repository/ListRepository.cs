@@ -9,7 +9,7 @@ using Task2.Models;
 
 namespace Task2.Repository
 {
-    class Repository<T> : IRepository<T> where T : Entity
+    class ListRepository<T> : IRepository<T> where T : Entity
     {
         private List<T> _objects { get; set; } = new List<T>();
         public void Create(T obj)

@@ -1,0 +1,23 @@
+2021-07-29 16:34:50.537 +03:00 [INF] Program: Task2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null, namespace: Task2
+2021-07-29 16:35:09.928 +03:00 [INF] Program: Task2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null, namespace: Task2
+2021-07-29 16:35:20.068 +03:00 [INF] Id: 7e30e65c-5e61-4d07-9248-105070f77906, Name: Honda CBR-600, Model: CBR-600, Year: 2000, Odometre: 56000 created
+2021-07-29 16:35:28.545 +03:00 [INF] All motorcycles got
+2021-07-29 16:35:42.040 +03:00 [INF] Id: 7e30e65c-5e61-4d07-9248-105070f77906, Name: Honda CBR-600, Model: CBR-600, Year: 2000, Odometre: 56000 got by id
+2021-07-29 16:35:50.962 +03:00 [INF] Id: 7e30e65c-5e61-4d07-9248-105070f77906, Name: Yamaha, Model: CBR-600, Year: 2000, Odometre: 56000 updated
+2021-07-29 16:36:01.641 +03:00 [INF] Id: 7e30e65c-5e61-4d07-9248-105070f77906, Name: Yamaha, Model: CBR-600, Year: 2000, Odometre: 56000 got by id
+2021-07-29 16:36:07.754 +03:00 [INF] Id: 7e30e65c-5e61-4d07-9248-105070f77906, Name: Yamaha, Model: CBR-600, Year: 2000, Odometre: 56000 deleted
+2021-07-29 16:36:11.962 +03:00 [INF] All motorcycles got
+2021-07-29 16:41:46.756 +03:00 [INF] Id: c509c11d-68bd-4178-ac77-778f6fe7a770, Name: Honda CBR-600, Model: CBR-600, Year: 2000, Odometre: 56000 created
+2021-07-29 16:42:32.205 +03:00 [INF] All motorcycles got
+2021-07-29 16:42:33.507 +03:00 [INF] Id: c509c11d-68bd-4178-ac77-778f6fe7a770, Name: Honda CBR-600, Model: CBR-600, Year: 2000, Odometre: 56000 got by id
+2021-07-29 16:42:38.153 +03:00 [INF] Id: c509c11d-68bd-4178-ac77-778f6fe7a770, Name: Yamaha, Model: CBR-600, Year: 2000, Odometre: 56000 updated
+2021-07-29 16:43:08.907 +03:00 [INF] Id: c509c11d-68bd-4178-ac77-778f6fe7a770, Name: Yamaha, Model: CBR-600, Year: 2000, Odometre: 56000 got by id
+2021-07-29 16:43:10.368 +03:00 [INF] Id: c509c11d-68bd-4178-ac77-778f6fe7a770, Name: Yamaha, Model: CBR-600, Year: 2000, Odometre: 56000 deleted
+2021-07-29 16:43:11.310 +03:00 [INF] All motorcycles got
+2021-07-29 16:43:44.605 +03:00 [INF] Id: 68ce494f-4cd4-45bd-acc0-719bcb1e0d71, Name: Honda CBR-600, Model: CBR-600, Year: 2000, Odometre: 56000 created
+2021-07-29 16:43:55.931 +03:00 [INF] All motorcycles got
+2021-07-29 16:44:06.792 +03:00 [INF] Id: 68ce494f-4cd4-45bd-acc0-719bcb1e0d71, Name: Honda CBR-600, Model: CBR-600, Year: 2000, Odometre: 56000 got by id
+2021-07-29 16:44:30.988 +03:00 [INF] Id: 68ce494f-4cd4-45bd-acc0-719bcb1e0d71, Name: Yamaha, Model: CBR-600, Year: 2000, Odometre: 56000 updated
+2021-07-29 16:44:42.487 +03:00 [INF] Id: 68ce494f-4cd4-45bd-acc0-719bcb1e0d71, Name: Yamaha, Model: CBR-600, Year: 2000, Odometre: 56000 got by id
+2021-07-29 16:44:43.276 +03:00 [INF] Id: 68ce494f-4cd4-45bd-acc0-719bcb1e0d71, Name: Yamaha, Model: CBR-600, Year: 2000, Odometre: 56000 deleted
+2021-07-29 16:44:44.333 +03:00 [INF] All motorcycles got
