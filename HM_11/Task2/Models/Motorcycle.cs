@@ -15,21 +15,6 @@ namespace Task2.Models
         public DateTime Year { get; set; }
         public int Odometre { get; set; }
 
-        //public override bool Equals(object obj)
-        //{
-        //    if (obj == null || GetType() != obj.GetType())
-        //    {
-        //        return false;
-        //    }
-        //    var moto = obj as Motorcycle;
-        //    return moto.Id.Equals(Id);
-        //}
-
-        //public override int GetHashCode()
-        //{
-        //    return Id.ToString().Length;
-        //}
-
         public override string ToString()
         {
             return $"Id: {Id}, Name: {Name}, Model: {Model}, Year: {Year.Year}, Odometre: {Odometre}";
