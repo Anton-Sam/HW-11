@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-namespace hw_15.Task01
+namespace hw_15.Task01.Attributes
 {
     [AttributeUsage(AttributeTargets.Property)]
     class MyCreditCardAttribute : ValidationAttribute
