@@ -17,16 +17,13 @@ namespace Motoshop.Controllers
         {
             _motoRepository = new StaticCollectionTransportRepository<Moto>();
         }
-        
+
         // GET: MotorcycleController
         public ActionResult Index()
         {
-            if (ModelState.IsValid)
-            {
-                var motorcycles = _motoRepository.Get();
-                return View(motorcycles);
-            }
-            return View("Home");
+            var motorcycles = _motoRepository.Get();
+            return View(motorcycles);
+
         }
 
         // GET: MotorcycleController/Details/5
@@ -50,18 +47,11 @@ namespace Motoshop.Controllers
             {
                 return View();
             }
-            try
+            if (moto != null)
             {
-                if (moto != null)
-                {
-                    _motoRepository.Create(moto);
-                }
-                return RedirectToAction(nameof(Index));
+                _motoRepository.Create(moto);
             }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: MotorcycleController/Edit/5
