@@ -1,0 +1,1 @@
+2021-07-29 18:29:38.751 +03:00 [INF] Program: Task2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null, namespace: Task2

@@ -8,14 +8,14 @@ using Task2.Models;
 
 namespace Task2.Repository
 {
-    class MsSqlAdoMotorcycleRepository : IMotorcycleRepository
+    class MsSqlAdoMotorcycleRepository : IRepository<Motorcycle>
     {
         private readonly SqlConnection _connection;
         public MsSqlAdoMotorcycleRepository()
         {
             try
             {
-                var connectionString= ConfigurationManager.ConnectionStrings["LocalDBConnectionString"].ConnectionString;
+                var connectionString = ConfigurationManager.ConnectionStrings["LocalDBConnectionString"].ConnectionString;
                 _connection = new SqlConnection(connectionString);
                 _connection.Open();
             }
@@ -26,14 +26,14 @@ namespace Task2.Repository
             }
         }
 
-        public void CreateMotorcycle(Motorcycle moto)
+        public void Create(Motorcycle moto)
         {
             string sqlExpression = $"INSERT INTO Motorcycles (Id,Name,Model,Year,Odometre) VALUES ('{moto.Id}', '{moto.Name}','{moto.Model}','{moto.Year}','{moto.Odometre}')";
             GetSqlCommand(sqlExpression).ExecuteNonQuery();
             Log.Information($"{moto} created");
         }
 
-        public void DeleteMotorcycle(Motorcycle moto)
+        public void Delete(Motorcycle moto)
         {
             string sqlExpression = $"DELETE FROM Motorcycles WHERE Id='{moto.Id}'";
             GetSqlCommand(sqlExpression).ExecuteNonQuery();
@@ -41,7 +41,7 @@ namespace Task2.Repository
 
         }
 
-        public Motorcycle GetMotorcycleById(Guid id)
+        public Motorcycle GetById(Guid id)
         {
             string sqlExpression = $"SELECT * FROM Motorcycles WHERE Id='{id}'";
             SqlDataAdapter adapter = new SqlDataAdapter(sqlExpression, _connection);
@@ -63,7 +63,7 @@ namespace Task2.Repository
             return moto;
         }
 
-        public IEnumerable<Motorcycle> GetMotorcycles()
+        public IEnumerable<Motorcycle> GetObjects()
         {
             string sqlExpression = "SELECT * FROM Motorcycles";
             SqlDataAdapter adapter = new SqlDataAdapter(sqlExpression, _connection);
@@ -87,7 +87,7 @@ namespace Task2.Repository
             return resultList;
         }
 
-        public void UpdateMotorcycle(Motorcycle moto)
+        public void Update(Motorcycle moto)
         {
             string sqlExpression = $"UPDATE Motorcycles SET Name='{moto.Name}',Model='{moto.Model}',Year='{moto.Year}',Odometre='{moto.Odometre}' WHERE Id='{moto.Id}'";
             GetSqlCommand(sqlExpression).ExecuteNonQuery();

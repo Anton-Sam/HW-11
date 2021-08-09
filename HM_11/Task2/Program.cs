@@ -10,33 +10,33 @@ namespace Task2
         static void Main(string[] args)
         {
             ProgramStart();
-            TestRepository(new MockMotorcycleRepository());
+            TestRepository(new ListRepository<Motorcycle>());
             TestRepository(new MsSqlAdoMotorcycleRepository());
-            TestRepository(new MsSqlEfMotorcycleRepository());
+            TestRepository(new MsSqlEfRepository<Motorcycle>());
         }
 
-        private static void TestRepository(IMotorcycleRepository repository)
+        private static void TestRepository(IRepository<Motorcycle> repository)
         {
             var moto = new Motorcycle
             {
-                Id = Guid.NewGuid(),
                 Name = "Honda CBR-600",
                 Model = "CBR-600",
                 Year = new DateTime(2000, 1, 1),
                 Odometre = 56000
             };
-            repository.CreateMotorcycle(moto);
+            repository.Create(moto);
 
-            var moto1 = repository.GetMotorcycles();
+            var motos = repository.GetObjects();
 
-            var moto2 = repository.GetMotorcycleById(moto.Id);
+            var moto2 = repository.GetById(moto.Id);
 
             moto.Name = "Yamaha";
-            repository.UpdateMotorcycle(moto);
-            var moto3 = repository.GetMotorcycleById(moto.Id);
-            repository.DeleteMotorcycle(moto);
+            repository.Update(moto);
+            
+            var moto3 = repository.GetById(moto.Id);
+            repository.Delete(moto3);
 
-            var moto4 = repository.GetMotorcycles();
+            var motos1 = repository.GetObjects();
         }
 
         private static void ProgramStart()
@@ -50,12 +50,6 @@ namespace Task2
             var type = typeof(Program);
 
             Log.Information($"Program: {type.Assembly.FullName}, namespace: {type.Namespace}");
-        }
-
-        private static void PrintInfo(string str)
-        {
-            Log.Information($"Started write to console");
-            Console.WriteLine(str);
         }
     }
 }

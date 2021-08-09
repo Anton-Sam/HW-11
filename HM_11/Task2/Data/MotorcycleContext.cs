@@ -7,13 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Task2.Models;
 
-namespace Task2.Storage
+namespace Task2.Data
 {
-    class MotorcycleContext : DbContext
+    class ApplicationDbContext<T> : DbContext where T: Entity
     {
-        public DbSet<Motorcycle> Motorcycles { get; set; }
+        public DbSet<T> Entities { get; set; }
 
-        public MotorcycleContext()
+        public ApplicationDbContext()
         {
             Database.EnsureCreated();
         }
